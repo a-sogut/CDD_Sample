@@ -18,7 +18,7 @@ public interface Endpoints {
 
     // String DUMMY_APP_lIBRAHIM_URL = "http://" + sutDetails.getHost() + ":" + sutDetails.getPort() + "/dummy/api/libraries";
 
-    String DUMMY_APP_lIBRAHIM_URL = "http://ratesting-L28916.lvn.broadcom.net:8083/dummy/api/libraries"
+    String DUMMY_APP_lIBRAHIM_URL = "http://ratesting-L28916.lvn.broadcom.net:8083/dummy/api/libraries";
         
     String ID_VAR = "{id}";
 
