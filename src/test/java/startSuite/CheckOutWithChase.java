@@ -13,7 +13,7 @@ public class CheckOutWithChase extends LocalTestConfig{
     @Test
     public void comicsLibraryClassExist() throws InterruptedException {
 
-        Thread.sleep(1500);
+        Thread.sleep(1200);
         TEmulatorUtils.executeOperation(Library.COMICS_LIBRARY);
         Thread.sleep(1500);
     }
