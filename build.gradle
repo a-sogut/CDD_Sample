@@ -26,8 +26,31 @@ repositories {
 }
 
 dependencies {
-    compile group: "org.glassfish.jersey.containers", name: "jersey-container-servlet-core", version: "2.22.1"
-    compile group: "org.glassfish.jersey.media", name: "jersey-media-json-jackson", version: "2.21"
+    compile group: "org.glassfish.jersey.containers", name: "jersey-container-servlet-core", version: "2.29"
+    compile group: "org.glassfish.jersey.media", name: "jersey-media-json-jackson", version: "2.29"
+}
+
+task pathingJar(type: Jar) {
+    appendix = "pathing-1.0"
+    doFirst {
+        def classPathFiles = configurations.compile + sourceSets.main.runtimeClasspath + configurations.robotTest + configurations.robotCompile + sourceSets.robot.runtimeClasspath
+        def classPathNormalizedFiles = classPathFiles.files
+                .collect { it.toURI().toString().replaceFirst('/file:/+/', '/') }
+                .join(' ')
+        manifest {
+            attributes "Class-Path": classPathNormalizedFiles
+        }
+    }
+}
+
+task dumpRobotFrameworkClasspath {
+    dependsOn pathingJar
+    doLast {
+        File dumpFile = new File(buildDir, "cdd.robot.classpath.txt")
+        dumpFile.createNewFile()
+        dumpFile.text = pathingJar.archivePath
+    }
+
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
