@@ -14,7 +14,7 @@ public class SeveralTestsSuites extends LocalTestConfig{
     public void sentSeveralTestsSuites() throws InterruptedException {
 
         Thread.sleep(1500);
-        TEmulatorUtils.executeOperation(Library.PAYMENT);
+        //TEmulatorUtils.executeOperation(Library.PAYMENT);
 
         TEmulatorUtils.executeOperation(Library.LOGIN_URL_STRINGS_CLASS);
 
