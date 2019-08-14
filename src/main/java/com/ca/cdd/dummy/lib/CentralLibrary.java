@@ -2,7 +2,7 @@ package com.ca.cdd.dummy.lib;
 
 public class CentralLibrary extends Library {
 
-    private static String NAME = "Central";
+    private static String NAME = "Central1";
 
     @Override
     public String getName()  {
