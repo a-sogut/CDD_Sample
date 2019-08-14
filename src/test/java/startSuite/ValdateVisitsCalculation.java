@@ -17,7 +17,7 @@ public class ValdateVisitsCalculation extends LocalTestConfig{
         int numOfVisitForComics =10;
         int numOfVisitForExactScience =5;
 
-        runOperationXtimes(numOfVisitForComics, Library.COMICS_LIBRARY);
+        runOperationXtimes(numOfVisitForComics, Library.PAYMENT);
         runOperationXtimes(numOfVisitForExactScience, Library.EXACTSCIENCES_LIBRARY);
         Thread.sleep(1500);
     }

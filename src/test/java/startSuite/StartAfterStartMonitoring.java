@@ -14,7 +14,7 @@ public class StartAfterStartMonitoring extends LocalTestConfig{
     public void sendStartRightAfterStart() throws InterruptedException {
 
         Thread.sleep(1500);
-        TEmulatorUtils.executeOperation(Library.COMICS_LIBRARY);
+        TEmulatorUtils.executeOperation(Library.PAYMENT);
 
         TEmulatorUtils.executeOperation(Library.CENTRAL_LIBRARY);
         Thread.sleep(1500);
