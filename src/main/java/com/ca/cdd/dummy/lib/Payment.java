@@ -1,10 +1,6 @@
 package com.ca.cdd.dummy.lib;
 
-
-
-
-
-public class ComicsLibrary extends Library {
+public class Payment extends Library {
     private static String NAME = "Comics";
     @Override
     public String getName() {
@@ -12,4 +8,4 @@ public class ComicsLibrary extends Library {
     }
     
 }
-// sdv
+

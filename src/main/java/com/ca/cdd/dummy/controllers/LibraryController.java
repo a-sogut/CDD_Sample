@@ -18,8 +18,8 @@ public class LibraryController {
 
     @GET
     public String getLibraries() {
-        Library[] libraries = { new CentralLibrary(), new ComicsLibrary(), new ExactSciencesLibrary(), new InnerClassCallToClass(), new InnerClassCallToClass.CallPrintStr(),
-                                    new ImplementInterface(), new AnonymousClass(), new OneLevelClass(), new SecondLevelClass(), new ThirdLevelClass(), new UseParamFromFatherClass(),
+        Library[] libraries = { new CentralLibrary(), new Payment(), new ExactSciencesLibrary(), new InnerClassCallToClass(), new InnerClassCallToClass.CallPrintStr(),
+                                    new ImplementInterface(), new LoginURLStrings(), new OneLevelClass(), new SecondLevelClass(), new ThirdLevelClass(), new UseParamFromFatherClass(),
                                     new MainThread(), new FailTestSuite()};
         StringBuffer sb = new StringBuffer("[ ");
         for (short i=0; i< libraries.length; i++) {
@@ -39,7 +39,7 @@ public class LibraryController {
             return new CentralLibrary().getType();
         }
         if ("1".equals(id)) {
-            return new ComicsLibrary().getType();
+            return new Payment().getType();
         }
         if ("2".equals(id)) {
             return new ExactSciencesLibrary().getType();
@@ -52,7 +52,7 @@ public class LibraryController {
             return new ImplementInterface().interfaceStingMethod();
         }
         if ("5".equals(id)) {
-            AnonymousClass a = new AnonymousClass();
+            LoginURLStrings a = new LoginURLStrings();
             return a.interfaceStingMethod();
         }
         if ("6".equals(id)) {
