@@ -2,7 +2,7 @@ package com.ca.cdd.dummy.lib;
 
 public class LoginURLStrings extends Library implements InterfaceClass {
  
-  private static String NAME = "AnonymousClass2";
+  private static String NAME = "AnonymousClass1";
      
   InterfaceClass anonymusMethos = new InterfaceClass() {
         @Override
@@ -29,5 +29,12 @@ public class LoginURLStrings extends Library implements InterfaceClass {
     @Override
     public String getName() {
         return NAME;
+    }
+	
+	public String getGoogleURL() {
+        return "/login/google";
+    }
+	public String getLinkedInURL() {
+        return "/login/linkedin";
     }
 }
