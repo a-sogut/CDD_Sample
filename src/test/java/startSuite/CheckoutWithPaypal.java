@@ -7,11 +7,11 @@ import org.junit.Test;
 import Utils.LocalTestConfig;
 
 @DisplayName("Monitoring of different class types")
-public class StartAfterStartMonitoring extends LocalTestConfig{
+public class CheckoutWithPaypal extends LocalTestConfig{
 
     @DisplayName("Agent accept Start After Start Without Stop in the middle")
     @Test
-    public void sendStartRightAfterStart() throws InterruptedException {
+    public void testCheckout() throws InterruptedException {
 
         Thread.sleep(1500);
         TEmulatorUtils.executeOperation(Library.PAYMENT);
