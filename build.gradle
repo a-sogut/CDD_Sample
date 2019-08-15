@@ -14,9 +14,12 @@ plugins {
     id "io.qameta.allure" version "2.5"
 }
 
+version "${PROJECT_VERSION}"
+
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'io.qameta.allure'
+apply plugin: 'maven'
 
 def caTasksGroupName = "CA - Development"
 
@@ -28,6 +31,20 @@ repositories {
 dependencies {
     compile group: "org.glassfish.jersey.containers", name: "jersey-container-servlet-core", version: "2.29"
     compile group: "org.glassfish.jersey.media", name: "jersey-media-json-jackson", version: "2.29"
+}
+
+ext {
+    BUILD_NUM = System.getenv('BUILD_NUMBER') != null ? System.getenv('BUILD_NUMBER') : getCustomBuildId()
+    GIT_VERSION = System.getenv('GIT_REVISION') != null ? System.getenv('GIT_REVISION') : "unknown"
+}
+
+def getCustomBuildId() {
+    String username = System.getProperty("user.name")
+    username = username.replace(' ', '_')
+
+    String time = new Date().format("YYMMdd'T'HHmmss", TimeZone.getTimeZone('GMT+2'))
+
+    return username + "_" + time
 }
 
 task pathingJar(type: Jar) {
@@ -112,4 +129,27 @@ war {
     archiveName 'dummy.war'
 }
 
+def projectVersion = "${PROJECT_VERSION}-SNAPSHOT"
+def repositoryUrl = "${artifactory_integration_repository}"
+
+if (!Boolean.valueOf("${artifact_is_snapshot}")) {
+    repositoryUrl = "${artifactory_release_candidate_repository}"
+    projectVersion = "${PROJECT_VERSION}"
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom*.whenConfigured { pom -> pom.dependencies.clear() }
+            pom.artifactId = "$ARTIFACT_NAME"
+            pom.version = projectVersion
+            pom.groupId = "$artifact_group"
+            repository(url: repositoryUrl) {
+                authentication(userName: "${artifactory_username}", password: "${artifactory_password}")
+            }
+        }
+    }
+}
+
 apply from: 'robot.gradle'
+apply from: 'uploads.gradle'
