@@ -1,0 +1,130 @@
+import groovy.json.JsonBuilder
+import groovy.transform.ToString
+
+class InitArtifactsList extends DefaultTask {
+    String fileName
+
+    @TaskAction
+    def initFile() {
+        def filePath = project.getRootProject().buildDir
+        def theList = new File(filePath, fileName)
+        if (!theList.parentFile.exists()) {
+            theList.parentFile.mkdirs()
+        }
+        if (theList.exists()) {
+            theList.delete()
+        }
+        theList.createNewFile()
+    }
+}
+
+@ToString(includeNames=true)
+class DeploymentComponent {
+    String name
+    String version
+    String build //(lastSuccessfullBuild)
+    String warFileName
+    String fullPath
+
+    private contentHash = null
+    private originalClassName = null
+}
+
+task prepareUploadedArtifactsList(type: InitArtifactsList) {
+    group "Upload"
+    description "Creates, and if needed cleans the file which holds the URLs of all uploaded artifacts (used by task registerArtifactUploadUrl)"
+
+    fileName = 'uploaded.lst'
+}
+
+task prepareDeploymentComponentsList(type: InitArtifactsList) {
+    group "Upload"
+    description "Creates, and if needed cleans the file which holds the data all deployable artifacts"
+
+    fileName = 'deployment.json'
+
+    ext.deploymentComponents = []
+}
+
+task outputDeploymentComponentsList {
+    group "Upload"
+    description "Writes deployable artifacts data to the file created by prepareDeploymentComponentsList task"
+
+    dependsOn prepareDeploymentComponentsList
+
+    doLast {
+        def outFile = new File(rootProject.buildDir, prepareDeploymentComponentsList.fileName)
+        outFile.text = new JsonBuilder(prepareDeploymentComponentsList.deploymentComponents).toPrettyString()
+    }
+}
+
+allprojects {
+    afterEvaluate {
+        Project module = it
+
+        Upload uploadArchives = module.getTasks().withType(Upload.class).findByName("uploadArchives");
+        if (uploadArchives == null) {
+            return;
+        }
+
+        task registerArtifactUploadUrl {
+            group "Upload"
+            description "Registers the URLs, in external repo, of all uploaded artifacts (to a file)"
+
+            dependsOn prepareUploadedArtifactsList, prepareDeploymentComponentsList, uploadArchives
+            finalizedBy outputDeploymentComponentsList
+
+            doLast {
+                uploadArchives.repositories.each { repo ->
+                    def repoUrl = repo.repository.url
+                    def art = repo.pom.effectivePom
+                    def groupIdUrl = "${art.groupId}".replaceAll("\\.", "/")
+                    def artifactUploadUrl = "${repoUrl}/${groupIdUrl}/${art.artifactId}/${art.version}/${art.artifactId}-${art.version}.${art.packaging}"
+
+                    File file = new File(rootProject.buildDir,  prepareUploadedArtifactsList.fileName)
+                    file.append(artifactUploadUrl)
+                    file.append(System.getProperty("line.separator"))
+
+                    if ( isDeployableArtifact(art) ) {
+                        def component = new DeploymentComponent(
+                                name: art.artifactId,
+                                version: stripSnapshot(project.version), //art.version,
+                                build: rootProject.BUILD_NUM,
+                                warFileName: "${art.artifactId}.${art.packaging}",
+                                fullPath: resolveConcreteSnapshotUrl(artifactUploadUrl)
+                        )
+                        prepareDeploymentComponentsList.deploymentComponents.push(component)
+                    }
+                }
+            }
+        }
+
+        uploadArchives.finalizedBy registerArtifactUploadUrl
+    }
+}
+
+boolean isDeployableArtifact(org.gradle.api.publication.maven.internal.pom.DefaultMavenPom artifact) {
+    return "war".equals(artifact.packaging)
+}
+
+String stripSnapshot(String originalVersion) {
+    String snapSuffix = "-SNAPSHOT"
+    if (originalVersion.endsWith(snapSuffix)) {
+        return originalVersion.substring(0, originalVersion.size() - snapSuffix.size())
+    }
+    return originalVersion
+}
+
+def resolveConcreteSnapshotUrl(url) {
+    int filenameIndex = url.lastIndexOf('/')
+    boolean isSnapshot = url.indexOf("SNAPSHOT", filenameIndex) > -1
+    if (!isSnapshot) {
+        return url
+    }
+    def metadataUrl = url.substring(0, filenameIndex) + "/maven-metadata.xml"
+    def metadata = new XmlSlurper().parse(metadataUrl)
+    def snapshotNode = metadata.versioning.snapshot
+    def concreteVersion = "" + snapshotNode.timestamp + '-' + snapshotNode.buildNumber
+
+    return url.replace("SNAPSHOT.", concreteVersion+'.')
+}
