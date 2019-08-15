@@ -9,7 +9,7 @@ import Utils.LocalTestConfig;
 @DisplayName("Monitoring of different class types")
 public class CheckoutWithPaypal extends LocalTestConfig{
 
-    @DisplayName("Agent accept Start After Start Without Stop in the middle")
+    @DisplayName("Agent accept Start After Start Without Stop in the middle_1")
     @Test
     public void testCheckout() throws InterruptedException {
 
