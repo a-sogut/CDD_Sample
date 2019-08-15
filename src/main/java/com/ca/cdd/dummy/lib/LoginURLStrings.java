@@ -1,7 +1,7 @@
 package com.ca.cdd.dummy.lib;
 
 public class LoginURLStrings extends Library implements InterfaceClass {
- 
+   // test
   private static String NAME = "AnonymousClass2";
      
   InterfaceClass anonymusMethos = new InterfaceClass() {
