@@ -6,11 +6,11 @@ import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 
 @DisplayName("Monitoring of different class types")
-public class AllClassesTypes extends LocalTestConfig {
+public class Acceptance extends LocalTestConfig {
 
     @DisplayName("Operate All classes in dummy Application")
     @Test
-    public void allLibrariesExists() throws InterruptedException {
+    public void testAcceptance() throws InterruptedException {
 
         Thread.sleep(1500);
         TEmulatorUtils.executeAllOperations();

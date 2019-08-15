@@ -7,11 +7,11 @@ import org.junit.Test;
 import Utils.LocalTestConfig;
 
 @DisplayName("Monitoring of different class types")
-public class LoginURLStringsType extends LocalTestConfig{
+public class LoginWithLinkedIn extends LocalTestConfig{
 
     @DisplayName("Test Suite operate class type Anonymous Class")
     @Test
-    public void anonymousClassExistInFiles() throws InterruptedException {
+    public void testLogIn() throws InterruptedException {
 
         Thread.sleep(1500);
         TEmulatorUtils.executeOperation(Library.LOGIN_URL_STRINGS_CLASS);

@@ -9,11 +9,11 @@ import Utils.LocalTestConfig;
 import static org.junit.Assert.assertEquals;
 
 @DisplayName("Monitoring of different class types")
-public class TestForFailScenarion extends LocalTestConfig{
+public class ContactSupport extends LocalTestConfig{
 
     @DisplayName("Test For Validating Fail Heuristic")
     @Test
-    public void comicsLibraryClassExist() throws InterruptedException {
+    public void testContact() throws InterruptedException {
 
         Thread.sleep(1500);
         TEmulatorUtils.executeOperation(Library.FAIL_SCENARIO);

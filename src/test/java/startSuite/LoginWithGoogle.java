@@ -7,11 +7,11 @@ import org.junit.Test;
 import Utils.LocalTestConfig;
 
 @DisplayName("Monitoring of different class types")
-public class SeveralTestsSuites extends LocalTestConfig{
+public class LoginWithGoogle extends LocalTestConfig{
 
     @DisplayName("Send Several Tests Suites")
     @Test
-    public void sentSeveralTestsSuites() throws InterruptedException {
+    public void testLogIn() throws InterruptedException {
 
         Thread.sleep(1500);
         //TEmulatorUtils.executeOperation(Library.PAYMENT);

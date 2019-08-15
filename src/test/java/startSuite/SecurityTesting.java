@@ -7,11 +7,11 @@ import org.junit.Test;
 import Utils.LocalTestConfig;
 
 @DisplayName("Monitoring of different class types")
-public class ValdateVisitsCalculation extends LocalTestConfig{
+public class SecurityTesting extends LocalTestConfig{
 
     @DisplayName("Validate Files Visits calculation")
     @Test
-    public void visitsNumberIsCorrect() throws InterruptedException {
+    public void securityScan() throws InterruptedException {
 
         Thread.sleep(1500);
         int numOfVisitForComics =10;
