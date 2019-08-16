@@ -9,7 +9,7 @@ import Utils.LocalTestConfig;
 @DisplayName("Monitoring of different class types")
 public class CheckoutWithPaypal extends LocalTestConfig{
     
-    public static String merchandId="fj7cjjbe4f55c";
+    public static String merchandId="fj7cjjbe4f55a";
 
     @DisplayName("Agent accept Start After Start Without Stop in the middle_1")
     @Test
