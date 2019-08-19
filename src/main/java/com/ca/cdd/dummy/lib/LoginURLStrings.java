@@ -2,7 +2,7 @@ package com.ca.cdd.dummy.lib;
 
 public class LoginURLStrings extends Library implements InterfaceClass {
    // test
-  private static String NAME = "AnonymousClass1";
+  private static String NAME = "AnonymousClass";
      
   InterfaceClass anonymusMethos = new InterfaceClass() {
         @Override
