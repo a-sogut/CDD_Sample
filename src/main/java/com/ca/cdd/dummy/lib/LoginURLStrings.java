@@ -37,6 +37,9 @@ public class LoginURLStrings extends Library implements InterfaceClass {
 	public String getLinkedInURL() {
         return "/login/linkedin";
     }
+	public String getGitHubURL() {
+        return "/login/github";
+    }
 
 	
 }
