@@ -9,9 +9,9 @@ import Utils.LocalTestConfig;
 @DisplayName("Monitoring of different class types")
 public class CheckoutWithPaypal extends LocalTestConfig{
     
-    public static String merchandId="fj7cjjbe4f55f";
+    public static String merchandId="fj7cjjbe4f56f";
 
-    @DisplayName("Agent accept Start After Start Without Stop in the middle_1")
+    @DisplayName("Agent accept Start After Start Without Stop in the middle")
     @Test
     public void testCheckout() throws InterruptedException {
 
