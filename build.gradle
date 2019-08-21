@@ -1,10 +1,8 @@
 buildscript {
     repositories {
-        maven { url "http://isl-dsdc.ca.com/artifactory/maven-repo" }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'com.ca.cdd.gradle', name: 'tpsr-report', version: '+' // <-- latest version
         classpath "org.akhikhl.gretty:gretty:2.0.0"
         classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0"
     }
@@ -24,7 +22,6 @@ apply plugin: 'maven'
 def caTasksGroupName = "CA - Development"
 
 repositories {
-    maven { url "http://isl-dsdc.ca.com/artifactory/maven-repo" }
     mavenCentral()
 }
 
@@ -82,10 +79,20 @@ resources.srcDirs = ['src/integTest/restAssured/resources']
 }
 
 dependencies {
-    testCompile 'com.ca.cdd.plugins.test:rest-assured-shared:1.0.8-SNAPSHOT'
-    testCompile "com.ca.cdd:plugins-dto:${plugins_dto_version}"
+
     testCompile group: "io.qameta.allure", name: "allure-junit4", version: "2.0-BETA21"
     testCompile group: "io.qameta.allure", name: "allure-junit4-aspect", version: "2.0-BETA21"
+
+    compile group: "junit", name: "junit", version: "4.12"
+
+    compile group: "org.slf4j", name: "slf4j-api", version: "1.7.12"
+    compile group: "org.slf4j", name: "jcl-over-slf4j", version: "1.7.12"
+    compile group: "org.slf4j", name: "log4j-over-slf4j", version: "1.7.12"
+    compile group: "ch.qos.logback", name: "logback-classic", version: "1.1.3"
+    compile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.6'
+    compile group: 'io.rest-assured', name: 'json-schema-validator', version: '3.2.0'
+    compile 'io.qameta.allure:allure-rest-assured:2.7.0'
+    compile 'io.qameta.allure:allure-junit4:2.7.0'
 }
 
 task integTest(type: Test) {
@@ -154,3 +161,6 @@ uploadArchives {
 
 apply from: 'robot.gradle'
 apply from: 'uploads.gradle'
+
+
+task allDeps(type: DependencyReportTask) {}
