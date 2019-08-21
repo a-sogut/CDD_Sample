@@ -1,7 +1,5 @@
 package Utils;
 
-import static rest.assured.shared.config.TestConfig.sutDetails;
-
 public interface Endpoints {
 
     String TAR_TASK_ID = "tarTaskId";

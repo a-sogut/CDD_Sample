@@ -7,8 +7,6 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import rest.assured.shared.config.SUTDetails;
-import rest.assured.shared.config.TestConfig;
 
 public class LocalTestConfig extends TestConfig {
 
