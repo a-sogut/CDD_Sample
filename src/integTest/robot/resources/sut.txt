@@ -1,5 +1,5 @@
 [SUT]
 HOST=localhost
-PORT=8085
+PORT=8082
 SCHEME=http
 CONTEXT_SUFFIX=dummy
